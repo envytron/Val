@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>✨ Happy Birthday ✨</title>
+<title>Snap!</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
     min-height: 100vh;
   }
 
-  /* ── GALLERY SECTION ── */
+
   .gallery {
     display: flex;
     flex-direction: column;
@@ -72,7 +72,6 @@
     transition: transform 0.1s linear;
   }
 
-  /* placeholder when no image */
   .photo-placeholder {
     width: 100%;
     height: 100%;
@@ -89,7 +88,6 @@
 
   .photo-placeholder svg { opacity: 0.4; }
 
-  /* ── ZIGZAG RECTANGLE ── */
   .zigzag-section {
     display: flex;
     justify-content: center;
@@ -135,7 +133,7 @@
     letter-spacing: 0.01em;
   }
 
-  /* ── CAMERA SECTION ── */
+
   .camera-section {
     display: flex;
     flex-direction: column;
@@ -240,7 +238,7 @@
 
   #canvas { display: none; }
 
-  /* ── PROGRESS BAR ── */
+
   .progress-section {
     width: min(360px, 88vw);
     display: none;
@@ -299,7 +297,7 @@
     border-color: var(--teal);
   }
 
-  /* ── SPOTIFY / SUCCESS ── */
+  
   .spotify-btn {
     display: none;
     align-items: center;
@@ -327,7 +325,7 @@
     to   { opacity:1; transform: scale(1); }
   }
 
-  /* ── DETECTION FEEDBACK ── */
+ 
   .detect-msg {
     font-family: 'Cormorant Garamond', serif;
     font-size: 15px;
@@ -339,10 +337,10 @@
     transition: opacity 0.3s;
   }
 
-  /* ── FOOTER SPACE ── */
+
   .footer-space { height: 60px; }
 
-  /* ── SCROLL INDICATOR ── */
+  
   .scroll-hint {
     display: flex;
     flex-direction: column;
@@ -364,7 +362,7 @@
     50%      { transform: translateY(6px); }
   }
 
-  /* ── ANALYZING OVERLAY ── */
+  
   .analyzing-overlay {
     position: absolute;
     inset: 0;
@@ -391,12 +389,12 @@
 </head>
 <body>
 
-<!-- ══ GALLERY ══ -->
+
 <div class="gallery" id="gallery">
 
   <div class="parallax-wrapper" id="pw1">
     <div class="photo-frame">
-      <img src="imgs/1.jpg" alt="Photo 1" id="img1" onerror="this.parentNode.innerHTML=placeholderHTML(1)">
+      <img src="imgs/1.jpg.jpeg" alt="Photo 1" id="img1" onerror="this.parentNode.innerHTML=placeholderHTML(1)">
     </div>
   </div>
 
@@ -409,19 +407,19 @@
 
   <div class="parallax-wrapper" id="pw2">
     <div class="photo-frame">
-      <img src="imgs/2.jpg" alt="Photo 2" id="img2" onerror="this.parentNode.innerHTML=placeholderHTML(2)">
+      <img src="imgs/2.jpg.jpeg" alt="Photo 2" id="img2" onerror="this.parentNode.innerHTML=placeholderHTML(2)">
     </div>
   </div>
 
   <div class="parallax-wrapper" id="pw3">
     <div class="photo-frame">
-      <img src="imgs/3.jpg" alt="Photo 3" id="img3" onerror="this.parentNode.innerHTML=placeholderHTML(3)">
+      <img src="imgs/3.jpg.jpeg" alt="Photo 3" id="img3" onerror="this.parentNode.innerHTML=placeholderHTML(3)">
     </div>
   </div>
 
 </div>
 
-<!-- ══ ZIGZAG TEXT RECTANGLE ══ -->
+
 <div class="zigzag-section" id="zigzagSection">
   <div class="zigzag-container">
     <svg class="zigzag-svg" viewBox="0 0 480 240" xmlns="http://www.w3.org/2000/svg" id="zigzagSvg">
@@ -434,13 +432,13 @@
     </svg>
     <div class="zigzag-text-overlay">
       <p class="pinyon-script-regular" id="zigzagText">
-        Your message goes here — fill this with something beautiful for her
+        Okay you got here yasss, now i need you to snap 3 pictures with the 3 diff. paper accesories to unlock a surprise at the end!
       </p>
     </div>
   </div>
 </div>
 
-<!-- ══ CAMERA SECTION ══ -->
+
 <div class="camera-section" id="cameraSection">
 
   <div class="camera-outer">
@@ -467,25 +465,25 @@
 
   <div class="detect-msg" id="detectMsg"></div>
 
-  <!-- Progress -->
+
   <div class="progress-section" id="progressSection">
     <div class="progress-label" id="progressLabel">0 / 3 variations unlocked</div>
     <div class="progress-track">
       <div class="progress-fill" id="progressFill"></div>
     </div>
     <div class="variant-chips">
-      <div class="chip" id="chip0">🎂 Birthday hat</div>
-      <div class="chip" id="chip1">GOGOOGO Jojo's</div>
-      <div class="chip" id="chip2">🎧 Saiki K glasses</div>
+      <div class="chip" id="chip0">Birthday hat</div>
+      <div class="chip" id="chip1">GOGOOGO Jojo's...i still don't know what that means</div>
+      <div class="chip" id="chip2">Saiki K glasses</div>
     </div>
   </div>
 
-  <!-- Spotify button — fill in YOUR link below -->
-  <a class="spotify-btn" id="spotifyBtn" href="YOUR_SPOTIFY_LINK_HERE" target="_blank" rel="noopener">
+  
+  <a class="spotify-btn" id="spotifyBtn" href="https://open.spotify.com/playlist/6RA4M9F6G3pbBjLFPvFlI5?si=72f1a82f7d394c3b" target="_blank" rel="noopener">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
       <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 01-.857.208c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 11-.277-1.215c3.809-.87 7.076-.496 9.712 1.115a.623.623 0 01.207.856zm1.224-2.72a.78.78 0 01-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 01-.973-.519.782.782 0 01.52-.974c3.632-1.102 8.147-.568 11.233 1.329a.78.78 0 01.257 1.073zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.937.937 0 11-.543-1.793c3.538-1.072 9.414-.865 13.127 1.348a.937.937 0 01-.966 1.604z"/>
     </svg>
-    Open your gift 🎁
+    open the gift hehehe...
   </a>
 
 </div>
@@ -493,7 +491,7 @@
 <div class="footer-space"></div>
 
 <script>
-// ── PLACEHOLDER HTML ──
+
 function placeholderHTML(n) {
   return `<div class="photo-placeholder">
     <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -505,7 +503,7 @@ function placeholderHTML(n) {
   </div>`;
 }
 
-// ── ZIGZAG SVG PATH ──
+
 function buildZigzag() {
   const svg = document.getElementById('zigzagSvg');
   const W = 480, H = 240;
@@ -513,7 +511,7 @@ function buildZigzag() {
   const steps = 18;
   let d = '';
 
-  // Top zigzag (left → right)
+
   d += `M 0 ${z} `;
   const topStep = W / steps;
   for (let i = 0; i <= steps; i++) {
@@ -522,17 +520,17 @@ function buildZigzag() {
     d += `L ${x} ${y} `;
   }
 
-  // Right edge
+
   d += `L ${W} ${H - z} `;
 
-  // Bottom zigzag (right → left)
+
   for (let i = steps; i >= 0; i--) {
     const x = i * topStep;
     const y = (i % 2 === 0) ? H : H - z * 2;
     d += `L ${x} ${y} `;
   }
 
-  // Left edge
+
   d += `L 0 ${z} Z`;
 
   document.getElementById('zigPath').setAttribute('d', d);
@@ -540,7 +538,7 @@ function buildZigzag() {
 
 buildZigzag();
 
-// ── INTERSECTION OBSERVER (reveal + parallax trigger) ──
+
 const observers = [];
 
 function observeElement(el) {
