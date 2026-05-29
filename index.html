@@ -16,6 +16,9 @@
     --teal-pale: #e8f4f1;
     --white: #ffffff;
     --cream: #faf9f7;
+    --pol-pink: #d4a8b0;
+    --pol-blue: #93b8cc;
+    --pol-green: #82b8a8;
   }
 
   html { scroll-behavior: smooth; }
@@ -27,6 +30,7 @@
     min-height: 100vh;
   }
 
+  /* GALLERY */
   .gallery {
     display: flex;
     flex-direction: column;
@@ -45,10 +49,7 @@
     transition: opacity 0.9s ease, transform 0.9s ease;
   }
 
-  .parallax-wrapper.visible {
-    opacity: 1;
-    transform: translateY(0px);
-  }
+  .parallax-wrapper.visible { opacity: 1; transform: translateY(0px); }
 
   .photo-frame {
     width: 100%;
@@ -133,7 +134,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px 20px 80px;
+    padding: 20px 20px 60px;
     gap: 20px;
     opacity: 0;
     transform: translateY(40px);
@@ -142,7 +143,6 @@
 
   .camera-section.visible { opacity: 1; transform: translateY(0); }
 
-  /* STEP INSTRUCTION */
   .step-instruction {
     width: min(360px, 88vw);
     text-align: center;
@@ -229,7 +229,6 @@
 
   #videoEl.active { display: block; }
 
-  /* FLASH OVERLAY */
   .flash-overlay {
     position: absolute;
     inset: 0;
@@ -242,7 +241,6 @@
 
   .flash-overlay.flash { opacity: 1; }
 
-  /* CHECKMARK OVERLAY */
   .check-overlay {
     position: absolute;
     inset: 0;
@@ -272,7 +270,6 @@
     to   { opacity:1; transform: scale(1); }
   }
 
-  /* SNAP BUTTON */
   .snap-btn {
     width: 72px;
     height: 72px;
@@ -295,7 +292,7 @@
     height: 54px;
     border-radius: 50%;
     background: var(--teal);
-    transition: background 0.15s, transform 0.15s;
+    transition: background 0.15s;
   }
 
   .snap-btn:active .snap-btn-inner { background: var(--teal-light); }
@@ -383,7 +380,211 @@
   .spotify-btn:active { transform: scale(0.97); }
   .spotify-btn.show { display: flex; animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1); }
 
-  .footer-space { height: 60px; }
+  /* ── POLAROID SECTION ── */
+  .polaroid-section {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 20px;
+    gap: 32px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .polaroid-section.show { display: flex; }
+  .polaroid-section.visible { opacity: 1; transform: translateY(0); }
+
+  .polaroid-title {
+    font-family: "Pinyon Script", cursive;
+    font-size: clamp(28px, 7vw, 46px);
+    color: var(--teal);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* Desktop: overlapping fanned cluster */
+  .polaroid-cluster {
+    position: relative;
+    width: min(460px, 94vw);
+    height: 320px;
+  }
+
+  .polaroid {
+    position: absolute;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.34,1.2,0.64,1), box-shadow 0.3s;
+    cursor: pointer;
+  }
+
+  .polaroid:hover {
+    box-shadow: 0 16px 48px rgba(0,0,0,0.22);
+    z-index: 10 !important;
+  }
+
+  .polaroid-img-wrap {
+    flex: 1;
+    overflow: hidden;
+    background: #111;
+  }
+
+  .polaroid-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .polaroid-footer {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0 8px;
+  }
+
+  .polaroid-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: rgba(0,0,0,0.45);
+    letter-spacing: 0.06em;
+  }
+
+  /* Desktop layout — 3 overlapping rotated, matching PDF */
+  @media (min-width: 500px) {
+    .polaroid-cluster { height: 300px; }
+    .polaroid { width: 190px; height: 235px; }
+
+    /* pink — top left, rotated left */
+    .polaroid-0 {
+      left: 10px; top: 20px;
+      transform: rotate(-8deg);
+      z-index: 1;
+      border-bottom: 14px solid var(--pol-pink);
+    }
+    /* green — center, slight right tilt, on top */
+    .polaroid-1 {
+      left: 50%; top: 5px;
+      transform: translateX(-50%) rotate(2deg);
+      z-index: 3;
+      border-bottom: 14px solid var(--pol-green);
+    }
+    /* blue — right, rotated right */
+    .polaroid-2 {
+      right: 10px; top: 30px;
+      transform: rotate(8deg);
+      z-index: 2;
+      border-bottom: 14px solid var(--pol-blue);
+    }
+  }
+
+  /* Mobile: stacked vertically with gentle tilts */
+  @media (max-width: 499px) {
+    .polaroid-cluster {
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      position: static;
+    }
+
+    .polaroid {
+      position: static;
+      width: min(240px, 68vw);
+      height: auto;
+      aspect-ratio: 5/6;
+    }
+
+    .polaroid-0 {
+      transform: rotate(-3deg);
+      border-bottom: 14px solid var(--pol-pink);
+    }
+    .polaroid-1 {
+      transform: rotate(2deg);
+      border-bottom: 14px solid var(--pol-green);
+    }
+    .polaroid-2 {
+      transform: rotate(-2deg);
+      border-bottom: 14px solid var(--pol-blue);
+    }
+  }
+
+  /* SAVE BUTTON */
+  .save-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 99px;
+    padding: 14px 32px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(80,150,137,0.3);
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s;
+    margin-top: 8px;
+  }
+
+  .save-btn:active { transform: scale(0.96); }
+  .save-btn:disabled { opacity: 0.6; cursor: default; }
+
+  /* iOS tip box */
+  .ios-tip {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: var(--teal-pale);
+    border: 1px solid rgba(80,150,137,0.25);
+    border-radius: 14px;
+    padding: 14px 20px;
+    width: min(340px, 90vw);
+    text-align: center;
+  }
+
+  .ios-tip.show { display: flex; }
+
+  .ios-tip p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: var(--teal);
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+  }
+
+  .ios-tip strong { font-weight: 600; }
+
+  /* Preview image for iOS save */
+  .ios-preview {
+    display: none;
+    border-radius: 12px;
+    width: min(320px, 88vw);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    margin-top: -10px;
+  }
+
+  .ios-preview.show { display: block; }
+
+  .save-hint {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: rgba(80,150,137,0.55);
+    letter-spacing: 0.05em;
+    text-align: center;
+    margin-top: -20px;
+  }
+
+  .footer-space { height: 80px; }
 
   .scroll-hint {
     display: flex;
@@ -491,7 +692,6 @@
 
   <canvas id="canvas"></canvas>
 
-  <!-- PROGRESS -->
   <div class="progress-section" id="progressSection">
     <div class="progress-label" id="progressLabel">0 / 3 variations unlocked</div>
     <div class="progress-track">
@@ -513,19 +713,69 @@
 
 </div>
 
+<!-- POLAROID SECTION -->
+<div class="polaroid-section" id="polaroidSection">
+  <p class="polaroid-title">your little memories</p>
+
+  <div class="polaroid-cluster" id="polaroidCluster">
+    <div class="polaroid polaroid-0" id="pol0">
+      <div class="polaroid-img-wrap">
+        <img id="polImg0" src="" alt="Birthday hat photo">
+      </div>
+      <div class="polaroid-footer">
+        <span class="polaroid-label">bday hat</span>
+      </div>
+    </div>
+    <div class="polaroid polaroid-1" id="pol1">
+      <div class="polaroid-img-wrap">
+        <img id="polImg1" src="" alt="Jojo photo">
+      </div>
+      <div class="polaroid-footer">
+        <span class="polaroid-label">gogo jojo's</span>
+      </div>
+    </div>
+    <div class="polaroid polaroid-2" id="pol2">
+      <div class="polaroid-img-wrap">
+        <img id="polImg2" src="" alt="Saiki K photo">
+      </div>
+      <div class="polaroid-footer">
+        <span class="polaroid-label">saiki k</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="save-btn" id="saveBtn" onclick="saveToRoll()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M12 3v13M7 11l5 5 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M4 20h16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    Save to camera roll
+  </button>
+
+  <!-- iOS: show the image directly so user can long-press save -->
+  <div class="ios-tip" id="iosTip">
+    <p><strong>On iPhone?</strong> Long-press the image below and tap <strong>"Save to Photos"</strong></p>
+  </div>
+  <img class="ios-preview" id="iosPreview" src="" alt="Your polaroid memories">
+
+</div>
+
 <div class="footer-space"></div>
 
 <script>
-// STEPS CONFIG — edit the text here if you want different wording
 const STEPS = [
-  { instruction: 'first put the bday hat into your mini me',     chip: 0 },
-  { instruction: 'Now the GOGO Jojo\'s signs',                chip: 1 },
-  { instruction: 'last one.......Saiki K glasses + antennas!',     chip: 2 },
+  { instruction: 'first put the bday hat into your mini me',  chip: 0 },
+  { instruction: "Now the GOGO Jojo's signs",                 chip: 1 },
+  { instruction: 'last one.......Saiki K glasses + antennas!',chip: 2 },
 ];
 
 let currentStep = 0;
 let stream = null;
 let snapping = false;
+const capturedDataURLs = [];
+
+// Detect iOS
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
 function placeholderHTML(n) {
   return `<div class="photo-placeholder">
@@ -550,14 +800,12 @@ function buildZigzag() {
 }
 buildZigzag();
 
-// INTERSECTION OBSERVER
 document.querySelectorAll('.parallax-wrapper, .zigzag-section, .camera-section').forEach(el => {
   new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) el.classList.add('visible'); });
   }, { threshold: 0.15 }).observe(el);
 });
 
-// PARALLAX
 const pws = document.querySelectorAll('.parallax-wrapper');
 function onScroll() {
   pws.forEach(pw => {
@@ -571,10 +819,9 @@ function onScroll() {
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
-// CAMERA
-const videoEl  = document.getElementById('videoEl');
-const canvas   = document.getElementById('canvas');
-const ctx      = canvas.getContext('2d');
+const videoEl = document.getElementById('videoEl');
+const canvas  = document.getElementById('canvas');
+const ctx     = canvas.getContext('2d');
 
 async function startCamera() {
   if (stream) return;
@@ -596,16 +843,23 @@ async function takePhoto() {
   if (snapping || !stream) return;
   snapping = true;
 
-  // Flash effect
   const flash = document.getElementById('flashOverlay');
   flash.classList.add('flash');
   setTimeout(() => flash.classList.remove('flash'), 150);
 
-  // Show checkmark
+  // Capture frame
+  canvas.width  = videoEl.videoWidth  || 640;
+  canvas.height = videoEl.videoHeight || 480;
+  ctx.drawImage(videoEl, 0, 0);
+  const dataURL = canvas.toDataURL('image/jpeg', 0.92);
+  capturedDataURLs.push(dataURL);
+
+  // Put photo in polaroid
+  document.getElementById(`polImg${currentStep}`).src = dataURL;
+
   const check = document.getElementById('checkOverlay');
   check.classList.add('show');
 
-  // Unlock current chip
   document.getElementById(`chip${STEPS[currentStep].chip}`).classList.add('unlocked');
   currentStep++;
   updateProgress();
@@ -614,7 +868,6 @@ async function takePhoto() {
   check.classList.remove('show');
 
   if (currentStep < STEPS.length) {
-    // Advance to next step
     const instr = document.getElementById('stepInstruction');
     const num   = document.getElementById('stepNumber');
     instr.classList.add('fade');
@@ -624,13 +877,26 @@ async function takePhoto() {
       instr.classList.remove('fade');
     }, 300);
   } else {
-    // All done!
+    // Stop camera
+    if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+
     document.getElementById('stepNumber').textContent = 'all done!';
     document.getElementById('stepInstruction').textContent = 'YASSS YOU GOT ALL 3, SO NOW CLICK THE PUSSINBIO SPOTIFY PLAYLIST BUTTON TO UNLOCK YOUR GIFT HEHEHE...';
     document.getElementById('snapBtn').classList.remove('show');
+
     setTimeout(() => {
       document.getElementById('spotifyBtn').classList.add('show');
     }, 400);
+
+    // Show polaroid section
+    setTimeout(() => {
+      const sec = document.getElementById('polaroidSection');
+      sec.classList.add('show');
+      setTimeout(() => {
+        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => sec.classList.add('visible'), 100);
+      }, 100);
+    }, 800);
   }
 
   snapping = false;
@@ -639,6 +905,162 @@ async function takePhoto() {
 function updateProgress() {
   document.getElementById('progressLabel').textContent = `${currentStep} / 3 variations unlocked`;
   document.getElementById('progressFill').style.width = `${(currentStep / 3) * 100}%`;
+}
+
+// ── SAVE TO CAMERA ROLL ──
+// Renders the 3 polaroids onto a single canvas and handles both
+// Android (auto-download) and iOS (show image to long-press save)
+async function saveToRoll() {
+  const btn = document.getElementById('saveBtn');
+  btn.textContent = 'Generating...';
+  btn.disabled = true;
+
+  // Collage dimensions
+  const PW = 300, PH = 370;
+  const FOOTER = 20; // space for text label inside polaroid
+  const BORDER = 16; // colored bottom strip
+  const IMG_H = PH - BORDER - FOOTER - 24; // photo area
+  const PAD = 36;
+  const COLS = 3;
+  const TOTAL_W = PW * COLS + PAD * (COLS + 1);
+  const TOTAL_H = PH + PAD * 2 + 40; // extra vertical for rotations
+
+  const out = document.createElement('canvas');
+  out.width  = TOTAL_W;
+  out.height = TOTAL_H;
+  const c = out.getContext('2d');
+
+  // Soft cream background
+  c.fillStyle = '#f5f3f0';
+  c.fillRect(0, 0, TOTAL_W, TOTAL_H);
+
+  // Polaroid colors matching the page: pink, green, blue
+  const COLORS    = ['#d4a8b0', '#82b8a8', '#93b8cc'];
+  // Rotations matching CSS: -8deg, +2deg, +8deg
+  const ROTATIONS = [-8, 2, 8];
+  // Text labels (no emoji — canvas emoji is unreliable cross-platform)
+  const LABELS    = ['bday hat', "gogo jojo's", 'saiki k'];
+
+  for (let i = 0; i < 3; i++) {
+    const x  = PAD + i * (PW + PAD);
+    const y  = PAD + 20; // slight vertical centering buffer
+    const cx = x + PW / 2;
+    const cy = y + PH / 2;
+    const angle = ROTATIONS[i] * Math.PI / 180;
+
+    c.save();
+    c.translate(cx, cy);
+    c.rotate(angle);
+
+    // Drop shadow
+    c.shadowColor    = 'rgba(0,0,0,0.2)';
+    c.shadowBlur     = 20;
+    c.shadowOffsetY  = 8;
+
+    // White polaroid body
+    c.fillStyle = '#ffffff';
+    roundRect(c, -PW/2, -PH/2, PW, PH, 5);
+    c.fill();
+
+    // Reset shadow before drawing details
+    c.shadowColor   = 'transparent';
+    c.shadowBlur    = 0;
+    c.shadowOffsetY = 0;
+
+    // Photo image area (inset 12px from edges, leave BORDER+FOOTER at bottom)
+    const imgX = -PW/2 + 12;
+    const imgY = -PH/2 + 12;
+    const imgW = PW - 24;
+    const imgH = IMG_H;
+
+    if (capturedDataURLs[i]) {
+      const img = await loadImage(capturedDataURLs[i]);
+      c.save();
+      c.beginPath();
+      roundRect(c, imgX, imgY, imgW, imgH, 3);
+      c.clip();
+      // cover-fit the image
+      const iw = img.width, ih = img.height;
+      const scale = Math.max(imgW / iw, imgH / ih);
+      const dw = iw * scale, dh = ih * scale;
+      c.drawImage(img,
+        imgX + (imgW - dw) / 2,
+        imgY + (imgH - dh) / 2,
+        dw, dh
+      );
+      c.restore();
+    } else {
+      // Placeholder if somehow missing
+      c.fillStyle = '#e8f4f1';
+      roundRect(c, imgX, imgY, imgW, imgH, 3);
+      c.fill();
+    }
+
+    // Label text (centered in the white area below photo, above color strip)
+    const labelY = PH/2 - BORDER - 4;
+    c.fillStyle = 'rgba(0,0,0,0.35)';
+    c.font = '600 16px Georgia, "Times New Roman", serif';
+    c.textAlign = 'center';
+    c.textBaseline = 'bottom';
+    c.fillText(LABELS[i], 0, labelY);
+
+    // Colored bottom border strip
+    c.fillStyle = COLORS[i];
+    roundRect(c, -PW/2, PH/2 - BORDER, PW, BORDER, [0, 0, 5, 5]);
+    c.fill();
+
+    c.restore();
+  }
+
+  // Generate final image
+  const dataURL = out.toDataURL('image/jpeg', 0.95);
+
+  if (isIOS) {
+    // iOS Safari can't auto-download — show the image for long-press saving
+    const preview = document.getElementById('iosPreview');
+    const tip     = document.getElementById('iosTip');
+    preview.src = dataURL;
+    preview.classList.add('show');
+    tip.classList.add('show');
+    preview.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Long-press the image below!`;
+    btn.disabled = false;
+  } else {
+    // Android / desktop — trigger download
+    const link = document.createElement('a');
+    link.download = 'birthday-memories.jpg';
+    link.href = dataURL;
+    link.click();
+
+    btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Saved!`;
+    btn.disabled = false;
+  }
+}
+
+function loadImage(src) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.src = src;
+  });
+}
+
+// Rounded rect path helper (supports per-corner radii)
+function roundRect(ctx, x, y, w, h, r) {
+  if (typeof r === 'number') r = [r, r, r, r];
+  const [tl, tr, br, bl] = r;
+  ctx.beginPath();
+  ctx.moveTo(x + tl, y);
+  ctx.lineTo(x + w - tr, y);
+  ctx.quadraticCurveTo(x + w, y,       x + w, y + tr);
+  ctx.lineTo(x + w, y + h - br);
+  ctx.quadraticCurveTo(x + w, y + h,   x + w - br, y + h);
+  ctx.lineTo(x + bl, y + h);
+  ctx.quadraticCurveTo(x, y + h,       x, y + h - bl);
+  ctx.lineTo(x, y + tl);
+  ctx.quadraticCurveTo(x, y,           x + tl, y);
+  ctx.closePath();
 }
 </script>
 </body>
