@@ -10,7 +10,6 @@
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  
   :root {
     --teal: #509689;
     --teal-light: #6db8a8;
@@ -56,9 +55,7 @@
     aspect-ratio: 4/5;
     border-radius: 28px;
     overflow: hidden;
-    box-shadow:
-      0 4px 24px rgba(80,150,137,0.12),
-      0 1px 4px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 24px rgba(80,150,137,0.12), 0 1px 4px rgba(0,0,0,0.06);
     position: relative;
     background: var(--teal-pale);
   }
@@ -98,10 +95,7 @@
     transition: opacity 0.8s ease, transform 0.8s ease;
   }
 
-  .zigzag-section.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .zigzag-section.visible { opacity: 1; transform: translateY(0); }
 
   .zigzag-container {
     position: relative;
@@ -134,7 +128,7 @@
     letter-spacing: 0.01em;
   }
 
-  /* CAMERA */
+  /* CAMERA SECTION */
   .camera-section {
     display: flex;
     flex-direction: column;
@@ -146,9 +140,34 @@
     transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
   }
 
-  .camera-section.visible {
-    opacity: 1;
-    transform: translateY(0);
+  .camera-section.visible { opacity: 1; transform: translateY(0); }
+
+  /* STEP INSTRUCTION */
+  .step-instruction {
+    width: min(360px, 88vw);
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(17px, 4vw, 22px);
+    color: var(--teal);
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease;
+  }
+
+  .step-instruction.fade { opacity: 0; }
+
+  .step-number {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: rgba(80,150,137,0.5);
+    text-transform: uppercase;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    margin-bottom: -8px;
   }
 
   .camera-outer {
@@ -192,6 +211,7 @@
   }
 
   .cam-prompt svg { opacity: 0.6; }
+
   .cam-prompt span {
     font-family: 'Cormorant Garamond', serif;
     font-size: 16px;
@@ -205,14 +225,57 @@
     height: 100%;
     object-fit: cover;
     display: none;
-    transform: scaleX(-1);
   }
 
   #videoEl.active { display: block; }
 
+  /* FLASH OVERLAY */
+  .flash-overlay {
+    position: absolute;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20;
+    transition: opacity 0.05s ease;
+  }
+
+  .flash-overlay.flash { opacity: 1; }
+
+  /* CHECKMARK OVERLAY */
+  .check-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(80,150,137,0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 15;
+    border-radius: 13px;
+  }
+
+  .check-overlay.show { display: flex; }
+
+  .check-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  @keyframes popIn {
+    from { opacity:0; transform: scale(0.5); }
+    to   { opacity:1; transform: scale(1); }
+  }
+
+  /* SNAP BUTTON */
   .snap-btn {
-    width: 62px;
-    height: 62px;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
     background: var(--white);
     border: 3px solid var(--teal);
@@ -228,11 +291,11 @@
   .snap-btn.show { display: flex; }
 
   .snap-btn-inner {
-    width: 44px;
-    height: 44px;
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
     background: var(--teal);
-    transition: background 0.15s;
+    transition: background 0.15s, transform 0.15s;
   }
 
   .snap-btn:active .snap-btn-inner { background: var(--teal-light); }
@@ -314,28 +377,11 @@
     text-decoration: none;
     margin-top: 6px;
     box-shadow: 0 4px 16px rgba(29,185,84,0.3);
-    transition: transform 0.15s, box-shadow 0.15s;
-    animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    transition: transform 0.15s;
   }
 
   .spotify-btn:active { transform: scale(0.97); }
-  .spotify-btn.show { display: flex; }
-
-  @keyframes popIn {
-    from { opacity:0; transform: scale(0.8); }
-    to   { opacity:1; transform: scale(1); }
-  }
-
-  .detect-msg {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 15px;
-    color: var(--teal);
-    text-align: center;
-    min-height: 22px;
-    letter-spacing: 0.04em;
-    width: min(360px, 88vw);
-    transition: opacity 0.3s;
-  }
+  .spotify-btn.show { display: flex; animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1); }
 
   .footer-space { height: 60px; }
 
@@ -359,38 +405,15 @@
     0%,100% { transform: translateY(0); }
     50%      { transform: translateY(6px); }
   }
-
-  .analyzing-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(80,150,137,0.45);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-  }
-
-  .analyzing-overlay.show { display: flex; }
-
-  .analyzing-spinner {
-    width: 44px;
-    height: 44px;
-    border: 3px solid rgba(255,255,255,0.4);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 
+<!-- GALLERY -->
 <div class="gallery" id="gallery">
-
   <div class="parallax-wrapper" id="pw1">
     <div class="photo-frame">
-      <img src="imgs/1.jpg.jpeg" alt="Photo 1" id="img1" onerror="this.parentNode.innerHTML=placeholderHTML(1)">
+      <img src="imgs/1.jpg.jpeg" alt="Photo 1" onerror="this.parentNode.innerHTML=placeholderHTML(1)">
     </div>
   </div>
 
@@ -403,16 +426,15 @@
 
   <div class="parallax-wrapper" id="pw2">
     <div class="photo-frame">
-      <img src="imgs/2.jpg.jpeg" alt="Photo 2" id="img2" onerror="this.parentNode.innerHTML=placeholderHTML(2)">
+      <img src="imgs/2.jpg.jpeg" alt="Photo 2" onerror="this.parentNode.innerHTML=placeholderHTML(2)">
     </div>
   </div>
 
   <div class="parallax-wrapper" id="pw3">
     <div class="photo-frame">
-      <img src="imgs/3.jpg.jpeg" alt="Photo 3" id="img3" onerror="this.parentNode.innerHTML=placeholderHTML(3)">
+      <img src="imgs/3.jpg.jpeg" alt="Photo 3" onerror="this.parentNode.innerHTML=placeholderHTML(3)">
     </div>
   </div>
-
 </div>
 
 <!-- ZIGZAG -->
@@ -427,7 +449,7 @@
       <path id="zigPath" fill="#509689" filter="url(#softShadow)"/>
     </svg>
     <div class="zigzag-text-overlay">
-      <p class="pinyon-script-regular" id="zigzagText">
+      <p class="pinyon-script-regular">
         Okay you got here yasss, now i need you to snap 3 pictures with the 3 diff. paper accesories to unlock a surprise at the end!
       </p>
     </div>
@@ -436,6 +458,11 @@
 
 <!-- CAMERA -->
 <div class="camera-section" id="cameraSection">
+
+  <p class="step-number" id="stepNumber">step 1 of 3</p>
+  <div class="step-instruction" id="stepInstruction">
+    Hold up the birthday hat to the photo
+  </div>
 
   <div class="camera-outer">
     <div class="camera-inner" id="cameraInner" onclick="startCamera()">
@@ -447,8 +474,13 @@
         <span>Tap to enable camera</span>
       </div>
       <video id="videoEl" autoplay playsinline muted></video>
-      <div class="analyzing-overlay" id="analyzingOverlay">
-        <div class="analyzing-spinner"></div>
+      <div class="flash-overlay" id="flashOverlay"></div>
+      <div class="check-overlay" id="checkOverlay">
+        <div class="check-circle">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <path d="M8 18l7 7 13-13" stroke="#509689" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
       </div>
     </div>
   </div>
@@ -459,8 +491,7 @@
 
   <canvas id="canvas"></canvas>
 
-  <div class="detect-msg" id="detectMsg"></div>
-
+  <!-- PROGRESS -->
   <div class="progress-section" id="progressSection">
     <div class="progress-label" id="progressLabel">0 / 3 variations unlocked</div>
     <div class="progress-track">
@@ -468,7 +499,7 @@
     </div>
     <div class="variant-chips">
       <div class="chip" id="chip0">Birthday hat</div>
-      <div class="chip" id="chip1">GOGOOGO Jojo's...i still don't know what that means</div>
+      <div class="chip" id="chip1">GOGOOGO Jojo's</div>
       <div class="chip" id="chip2">Saiki K glasses</div>
     </div>
   </div>
@@ -485,6 +516,17 @@
 <div class="footer-space"></div>
 
 <script>
+// STEPS CONFIG — edit the text here if you want different wording
+const STEPS = [
+  { instruction: 'first put the bday hat into your mini me',     chip: 0 },
+  { instruction: 'Now the GOGO Jojo\'s signs',                chip: 1 },
+  { instruction: 'last one.......Saiki K glasses + antennas!',     chip: 2 },
+];
+
+let currentStep = 0;
+let stream = null;
+let snapping = false;
+
 function placeholderHTML(n) {
   return `<div class="photo-placeholder">
     <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -497,45 +539,32 @@ function placeholderHTML(n) {
 }
 
 function buildZigzag() {
-  const W = 480, H = 320;
-  const z = 10;
-  const steps = 18;
-  let d = '';
-  d += `M 0 ${z} `;
-  const topStep = W / steps;
-  for (let i = 0; i <= steps; i++) {
-    const x = i * topStep;
-    const y = (i % 2 === 0) ? 0 : z * 2;
-    d += `L ${x} ${y} `;
-  }
-  d += `L ${W} ${H - z} `;
-  for (let i = steps; i >= 0; i--) {
-    const x = i * topStep;
-    const y = (i % 2 === 0) ? H : H - z * 2;
-    d += `L ${x} ${y} `;
-  }
+  const W = 480, H = 320, z = 10, steps = 18;
+  let d = `M 0 ${z} `;
+  const s = W / steps;
+  for (let i = 0; i <= steps; i++) d += `L ${i*s} ${i%2===0?0:z*2} `;
+  d += `L ${W} ${H-z} `;
+  for (let i = steps; i >= 0; i--) d += `L ${i*s} ${i%2===0?H:H-z*2} `;
   d += `L 0 ${z} Z`;
   document.getElementById('zigPath').setAttribute('d', d);
 }
 buildZigzag();
 
-function observeElement(el) {
-  const io = new IntersectionObserver((entries) => {
+// INTERSECTION OBSERVER
+document.querySelectorAll('.parallax-wrapper, .zigzag-section, .camera-section').forEach(el => {
+  new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) el.classList.add('visible'); });
-  }, { threshold: 0.15 });
-  io.observe(el);
-}
-document.querySelectorAll('.parallax-wrapper, .zigzag-section, .camera-section').forEach(observeElement);
+  }, { threshold: 0.15 }).observe(el);
+});
 
+// PARALLAX
 const pws = document.querySelectorAll('.parallax-wrapper');
 function onScroll() {
-  pws.forEach((pw) => {
+  pws.forEach(pw => {
     const img = pw.querySelector('img');
     if (!img) return;
     const rect = pw.getBoundingClientRect();
-    const center = rect.top + rect.height / 2;
-    const vCenter = window.innerHeight / 2;
-    const offset = (center - vCenter) * 0.18;
+    const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * 0.18;
     img.style.transform = `translateY(${offset}px) scale(1.1)`;
   });
 }
@@ -543,12 +572,9 @@ window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
 // CAMERA
-let stream = null;
-const videoEl = document.getElementById('videoEl');
-const snapBtn = document.getElementById('snapBtn');
-const camPrompt = document.getElementById('camPrompt');
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
+const videoEl  = document.getElementById('videoEl');
+const canvas   = document.getElementById('canvas');
+const ctx      = canvas.getContext('2d');
 
 async function startCamera() {
   if (stream) return;
@@ -558,127 +584,61 @@ async function startCamera() {
     });
     videoEl.srcObject = stream;
     videoEl.classList.add('active');
-    camPrompt.style.display = 'none';
-    snapBtn.classList.add('show');
+    document.getElementById('camPrompt').style.display = 'none';
+    document.getElementById('snapBtn').classList.add('show');
     document.getElementById('progressSection').classList.add('show');
-    setDetectMsg('Hold an accessory up to the photo and snap! ✨');
   } catch (err) {
-    setDetectMsg('Camera permission denied. Please allow camera access.');
-  }
-}
-
-const VARIANTS = ['hat', 'jojo', 'saiki'];
-const VARIANT_NAMES = ['Birthday hat 🎂', "Jojo's GOGO 🌟", 'Saiki K glasses 👓'];
-const unlocked = new Set();
-let analyzing = false;
-
-async function detectVariant(base64img) {
-  const systemPrompt = `You are a paper accessory detector for a birthday game. 
-
-The player is holding paper cutout accessories up to a small printed photo of a child. The accessories are handmade paper cutouts drawn by the birthday organizer. You need to identify which accessory is visible in the image.
-
-The 3 accessories to detect are:
-
-1. "hat" — A paper birthday/party hat cutout. It looks like a cone or triangular hat shape, drawn and cut from paper. It may be held near the top of the photo or anywhere in frame.
-
-2. "jojo" — JoJo's Bizarre Adventure onomatopoeia cutouts. These are stylized Japanese-looking letters or symbols, hand-drawn with bold outlines, colorful (purple/blue/red/orange). They look like manga sound effect text — angular, dramatic lettering. There may be two of them.
-
-3. "saiki" — Saiki K character accessories. These are green rectangular glasses (wide, almost rectangular lens shape) AND two pink round things on sticks (antennas). The glasses and antennas may be separate cutouts placed near each other. Detect this even if they are slightly apart.
-
-IMPORTANT RULES:
-- The accessories are paper cutouts held by hand near or against a printed photo — you do NOT need to see them actually attached to anyone's head
-- Be GENEROUS in detection — if you can see something that resembles any of these, classify it
-- The image may be a little blurry or at an angle — that's fine
-- A hand holding the cutout is expected and normal
-- If you see multiple accessories, pick the most prominent one
-
-Respond ONLY with a valid JSON object. No explanation, no markdown, just JSON:
-{"variant": "hat"} or {"variant": "jojo"} or {"variant": "saiki"} or {"variant": "none"}`;
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 50,
-        system: systemPrompt,
-        messages: [{
-          role: 'user',
-          content: [
-            { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: base64img } },
-            { type: 'text', text: 'Which paper accessory is visible in this image? Reply only with JSON.' }
-          ]
-        }]
-      })
-    });
-
-    const data = await response.json();
-    const text = data.content?.find(b => b.type === 'text')?.text || '{"variant":"none"}';
-    const clean = text.replace(/```json|```/g, '').trim();
-    const parsed = JSON.parse(clean);
-    return parsed.variant || 'none';
-  } catch (err) {
-    console.error('Detection error:', err);
-    return 'none';
+    document.getElementById('stepInstruction').textContent = 'Camera permission denied — please allow access and refresh.';
   }
 }
 
 async function takePhoto() {
-  if (analyzing) return;
-  analyzing = true;
+  if (snapping || !stream) return;
+  snapping = true;
 
-  const overlay = document.getElementById('analyzingOverlay');
-  overlay.classList.add('show');
-  setDetectMsg('Analyzing… ✨');
+  // Flash effect
+  const flash = document.getElementById('flashOverlay');
+  flash.classList.add('flash');
+  setTimeout(() => flash.classList.remove('flash'), 150);
 
-  canvas.width = videoEl.videoWidth || 640;
-  canvas.height = videoEl.videoHeight || 480;
-  ctx.save();
-  ctx.scale(-1, 1);
-  ctx.drawImage(videoEl, -canvas.width, 0);
-  ctx.restore();
+  // Show checkmark
+  const check = document.getElementById('checkOverlay');
+  check.classList.add('show');
 
-  const base64 = canvas.toDataURL('image/jpeg', 0.85).split(',')[1];
-  const variant = await detectVariant(base64);
+  // Unlock current chip
+  document.getElementById(`chip${STEPS[currentStep].chip}`).classList.add('unlocked');
+  currentStep++;
+  updateProgress();
 
-  overlay.classList.remove('show');
-  analyzing = false;
+  await new Promise(r => setTimeout(r, 900));
+  check.classList.remove('show');
 
-  if (variant !== 'none' && VARIANTS.includes(variant)) {
-    const wasNew = !unlocked.has(variant);
-    unlocked.add(variant);
-    const idx = VARIANTS.indexOf(variant);
-    document.getElementById(`chip${idx}`).classList.add('unlocked');
-
-    if (wasNew) {
-      setDetectMsg(`${VARIANT_NAMES[idx]} detected! 🎉`);
-      updateProgress();
-    } else {
-      setDetectMsg(`${VARIANT_NAMES[idx]} already found! Try another one ✨`);
-    }
-
-    if (unlocked.size === 3) {
-      setTimeout(() => {
-        setDetectMsg('All 3 variations unlocked! 🌟🎂🌟');
-        document.getElementById('spotifyBtn').classList.add('show');
-      }, 600);
-    }
+  if (currentStep < STEPS.length) {
+    // Advance to next step
+    const instr = document.getElementById('stepInstruction');
+    const num   = document.getElementById('stepNumber');
+    instr.classList.add('fade');
+    setTimeout(() => {
+      num.textContent   = `step ${currentStep + 1} of 3`;
+      instr.textContent = STEPS[currentStep].instruction;
+      instr.classList.remove('fade');
+    }, 300);
   } else {
-    setDetectMsg("Hmm, couldn't quite catch that one — try holding it closer! 📸");
+    // All done!
+    document.getElementById('stepNumber').textContent = 'all done!';
+    document.getElementById('stepInstruction').textContent = 'YASSS YOU GOT ALL 3, SO NOW CLICK THE PUSSINBIO SPOTIFY PLAYLIST BUTTON TO UNLOCK YOUR GIFT HEHEHE...';
+    document.getElementById('snapBtn').classList.remove('show');
+    setTimeout(() => {
+      document.getElementById('spotifyBtn').classList.add('show');
+    }, 400);
   }
+
+  snapping = false;
 }
 
 function updateProgress() {
-  const count = unlocked.size;
-  document.getElementById('progressLabel').textContent = `${count} / 3 variations unlocked`;
-  document.getElementById('progressFill').style.width = `${(count / 3) * 100}%`;
-}
-
-function setDetectMsg(msg) {
-  const el = document.getElementById('detectMsg');
-  el.style.opacity = 0;
-  setTimeout(() => { el.textContent = msg; el.style.opacity = 1; }, 150);
+  document.getElementById('progressLabel').textContent = `${currentStep} / 3 variations unlocked`;
+  document.getElementById('progressFill').style.width = `${(currentStep / 3) * 100}%`;
 }
 </script>
 </body>
